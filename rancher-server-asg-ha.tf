@@ -3,6 +3,7 @@ variable "ami_id"            {}
 variable "instance_size"     {}
 variable "key_name"          {}
 variable "rancher_ssl_cert"  {}
+variable "rancher_ssl_chain"  {}
 variable "rancher_ssl_key"   {}
 variable "database_address"  {}
 variable "database_port"     {}
@@ -19,6 +20,7 @@ resource "aws_iam_server_certificate" "rancher_ha"
  {
   name             = "${var.region}-${var.name}"
   certificate_body = "${file("${var.rancher_ssl_cert}")}"
+  certificate_chain = "${file("${var.rancher_ssl_chain}")}"
   private_key      = "${file("${var.rancher_ssl_key}")}"
 
   provisioner "local-exec" {
